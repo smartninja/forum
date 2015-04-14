@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <h1>Forum- Main</h1>
+    {% if username %}
+    <h2>Hello {{ username }}</h2>
+    <p><a href="{{ logout }}">Logout</a></p>
+    <hr>
+    <form name="new-topic" method="post">
+        <input type="text" name="title" placeholder="Title"><br>
+        <textarea name="content" placeholder="Content"></textarea>
+        <input type="submit" value="Objavi">
+    </form>
+    <hr>
+    {% for topic in topics %}
+    <a href="/topic/{{ topic.key().id() }}"><h1>{{ topic.title }}- {{ topic.created }}</h1></a>
+    {% endfor %}
+    {% else %}
+    <h2><a href="{{ login }}">Login</a></h2>
+    {% endif %}
+
+    <hr>
+</body>
+</html>
