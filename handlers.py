@@ -3,6 +3,7 @@ import os
 import jinja2
 from google.appengine.api import users
 from google.appengine.ext import db
+from google.appengine.ext.db import Key
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -56,8 +57,18 @@ class PostHandler(BaseHandler):
             topic = Topic.get_by_id(int(topic_id))
             args["topic"] = topic
             args["user"] = user
-
+            args["comments"] = topic.comments.order("created")
         self.render_template("topic.html", args)
+
+    def post(self, topic_id):
+        this_topic = Topic.get_by_id(int(topic_id))
+
+        Comment(topic=this_topic,
+                author = users.get_current_user().nickname(),
+                content = self.request.get("content")).put()
+        self.redirect("/topic/" + str(topic_id))
+
+
 
 
 
@@ -65,5 +76,13 @@ class Topic(db.Model):
     title = db.StringProperty()
     content = db.TextProperty()
     author = db.StringProperty()
-    created = db.DateTimeProperty(auto_now_add = True) #http://www.cyberciti.biz/faq/howto-get-current-date-time-in-python/
+    created = db.DateTimeProperty(auto_now_add=True) #http://www.cyberciti.biz/faq/howto-get-current-date-time-in-python/
+    deleted = db.BooleanProperty(default=False)
+
+class Comment(db.Model):
+    topic = db.ReferenceProperty(Topic,
+                                 collection_name="comments")
+    author = db.StringProperty()
+    created = db.DateTimeProperty(auto_now_add=True)
+    content = db.TextProperty()
     deleted = db.BooleanProperty(default=False)

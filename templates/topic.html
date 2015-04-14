@@ -7,6 +7,16 @@
 <body>
     {{ user.nickname() }}
     <hr>
-    {{ topic.title }}
+    {{ topic.content }}
+
+    <form name="new-comment" method="post">
+        <textarea name="content" placeholder="Content"></textarea>
+        <input type="submit" value="Objavi">
+    </form>
+
+    {% for comment in comments %}
+    <p>{{ comment.content }}</p>
+    <hr>
+    {% endfor %}
 </body>
 </html>
