@@ -2,8 +2,9 @@ import webapp2
 import os
 import jinja2
 from google.appengine.api import users
-from google.appengine.ext import db
-from google.appengine.ext.db import Key
+from google.appengine.ext import ndb
+
+from models import Topic, Comment
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
@@ -31,7 +32,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-        topics = db.GqlQuery("select * from Topic where deleted=False")
+        topics = Topic.query(Topic.deleted==False).order(Topic.created).fetch()
         args = {"topics":topics}
         if user:
             args["username"] = user.nickname()
@@ -57,32 +58,15 @@ class PostHandler(BaseHandler):
             topic = Topic.get_by_id(int(topic_id))
             args["topic"] = topic
             args["user"] = user
-            args["comments"] = topic.comments.order("created")
+            args["comments"] = Comment.query(Comment.deleted==False and Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
         self.render_template("topic.html", args)
 
     def post(self, topic_id):
-        this_topic = Topic.get_by_id(int(topic_id))
-
-        Comment(topic=this_topic,
-                author = users.get_current_user().nickname(),
-                content = self.request.get("content")).put()
+        author = users.get_current_user().nickname()
+        content = self.request.get("content")
+        c = Comment(
+            author = author,
+            content = content,
+            the_topic_id = int(topic_id)
+        ).put()
         self.redirect("/topic/" + str(topic_id))
-
-
-
-
-
-class Topic(db.Model):
-    title = db.StringProperty()
-    content = db.TextProperty()
-    author = db.StringProperty()
-    created = db.DateTimeProperty(auto_now_add=True) #http://www.cyberciti.biz/faq/howto-get-current-date-time-in-python/
-    deleted = db.BooleanProperty(default=False)
-
-class Comment(db.Model):
-    topic = db.ReferenceProperty(Topic,
-                                 collection_name="comments")
-    author = db.StringProperty()
-    created = db.DateTimeProperty(auto_now_add=True)
-    content = db.TextProperty()
-    deleted = db.BooleanProperty(default=False)

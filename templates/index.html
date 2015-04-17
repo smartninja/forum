@@ -17,7 +17,7 @@
     </form>
     <hr>
     {% for topic in topics %}
-    <a href="/topic/{{ topic.key().id() }}"><h1>{{ topic.title }}- {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }}</h1></a>
+    <a href="/topic/{{ topic.key.id()}}"><h1>{{ topic.title }}- {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }}</h1></a>
     {% endfor %}
     {% else %}
     <h2><a href="{{ login }}">Login</a></h2>
