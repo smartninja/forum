@@ -44,9 +44,9 @@ class MainHandler(BaseHandler):
     def post(self):
         title = self.request.get("title")
         content = self.request.get("content")
-
+        tags = self.request.get("tags").split(",")
         if title and content:
-            t = Topic(title=title, content = content)
+            t = Topic(title = title, content = content, tags = tags)
             t.put()
             self.redirect("/")
 
