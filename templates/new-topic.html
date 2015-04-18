@@ -5,7 +5,7 @@
     {% if username %}
     <form name="new-topic" method="post" id="topic-form">
         <input type="text" name="title" placeholder="Title" class="form-control"><br>
-        <textarea name="content" placeholder="Content" class="form-control" rows="6"></textarea><br>
+        <textarea name="content" placeholder="Content" class="form-control" rows="6" style="resize:none;"></textarea><br>
         <hr>
 
         <input class="pull-right btn btn-info" type="submit" id="submit-topic" value="Objavi">
@@ -15,4 +15,4 @@
         </div>
     </form>
     {% endif %}
-{% endblock %}
+{% endblock content %}

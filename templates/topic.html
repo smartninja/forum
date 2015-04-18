@@ -1,22 +1,30 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    {{ user.nickname() }}
-    <hr>
-    {{ topic.content }}
+{% extends "base.html" %}
+{% block title %} {{ topic.title }} {% endblock title %}
 
+{% block content %}
+<div class="panel panel-primary">
+    <div class="panel-heading panel-main-h"><a href="/topic/{{ topic.key.id()}}">{{ topic.title }}</a></div>
+    <div class="panel-body panel-main-b">
+        {{ topic.content }}
+    </div>
+</div>
+<div class="new-comment-area">
+    <hr>
     <form name="new-comment" method="post">
-        <textarea name="content" placeholder="Content"></textarea>
-        <input type="submit" value="Objavi">
+        <textarea name="content" placeholder="Komentiraj" class="form-control" rows="5" style="resize:none;"></textarea><br>
+        <input class="pull-right btn btn-info" type="submit" value="Objavi">
     </form>
-
-    {% for comment in comments %}
-    <p>{{ comment.content }}</p>
+    <br>
     <hr>
+</div>
+    <br>
+    {% for comment in comments %}
+    <div class="panel panel-info">
+    <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">Posted by {{ comment.author }} ({{ comment.created }})</a></div>
+    <div class="panel-body">
+        {{ comment.content }}
+    </div>
+</div>
     {% endfor %}
-</body>
-</html>
+
+{% endblock content %}

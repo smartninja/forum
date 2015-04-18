@@ -48,7 +48,7 @@ class PostHandler(BaseHandler):
             args = {}
             topic = Topic.get_by_id(int(topic_id))
             args["topic"] = topic
-            args["user"] = user
+            args["username"] = user.nickname()
             args["comments"] = Comment.query(Comment.deleted==False and Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
         self.render_template("topic.html", args)
 
@@ -83,7 +83,7 @@ class NewTopicHandler(BaseHandler):
         content = self.request.get("content")
         tags = self.request.get("all-tags").split(",")
         author = users.get_current_user().nickname()
-        if title and content:
+        if title and content and tags:
             t = Topic(title = title, content = content, author=author, tags=tags)
             t.put()
             self.redirect("/")

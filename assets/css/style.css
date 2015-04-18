@@ -2,3 +2,19 @@ body
 {
     margin-top:100px;
 }
+
+.panel-main-h *
+{
+    color:white;
+    font-size:25px;
+}
+
+.panel-main-b
+{
+    font-size:17px;
+}
+
+.new-comment-area
+{
+    background:#F2F2F2;
+}
