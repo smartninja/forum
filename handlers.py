@@ -41,15 +41,6 @@ class MainHandler(BaseHandler):
             args["login"] = users.create_login_url("/")
         self.render_template("index.html", args)
 
-    def post(self):
-        title = self.request.get("title")
-        content = self.request.get("content")
-        tags = self.request.get("tags").split(",")
-        if title and content:
-            t = Topic(title = title, content = content, tags = tags)
-            t.put()
-            self.redirect("/")
-
 class PostHandler(BaseHandler):
     def get(self, topic_id):
         user = users.get_current_user()
@@ -70,3 +61,23 @@ class PostHandler(BaseHandler):
             the_topic_id = int(topic_id)
         ).put()
         self.redirect("/topic/" + str(topic_id))
+
+class NewTopicHandler(BaseHandler):
+    def get(self):
+        args = {}
+        user = users.get_current_user()
+        if user:
+            args["username"] = user.nickname()
+            args["logout"] = users.create_logout_url("/")
+        else:
+            args["login"] = users.create_login_url("/")
+        self.render_template("new-topic.html", args)
+
+    def post(self):
+        title = self.request.get("title")
+        content = self.request.get("content")
+        tags = self.request.get("all-tags").split(",")
+        if title and content:
+            t = Topic(title = title, content = content, tags=tags)
+            t.put()
+            self.redirect("/")

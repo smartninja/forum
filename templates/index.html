@@ -1,32 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <script src="/assets/js/jquery-2.1.3.min.js"></script>
+{% extends "base.html" %}
+{% block title %} Main {% endblock title %}
 
-    <script src="/assets/js/script.js"></script>
-    <title></title>
-</head>
-<body>
-    <h1>Forum- Main</h1>
+{% block content %}
     {% if username %}
-    <h2>Hello {{ username }}</h2>
-    <p><a href="{{ logout }}">Logout</a></p>
-    <hr>
-    <button id="add-tag-button">Add tag</button>
-    <form name="new-topic" method="post">
-        <input type="text" name="title" placeholder="Title"><br>
-        <textarea name="content" placeholder="Content"></textarea><br>
-        <input type="submit" value="Objavi">
-    </form>
-    <hr>
     {% for topic in topics %}
     <a href="/topic/{{ topic.key.id()}}"><h1>{{ topic.title }}- {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }}</h1></a>
     {% endfor %}
-    {% else %}
-    <h2><a href="{{ login }}">Login</a></h2>
     {% endif %}
 
     <hr>
-</body>
-</html>
+
+{% endblock content %}

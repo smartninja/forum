@@ -7,6 +7,7 @@ class Topic(ndb.Model):
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
     tags = ndb.StringProperty(repeated=True)
+    num_comments = ndb.IntegerProperty()
 
 class Comment(ndb.Model):
     author = ndb.StringProperty()
