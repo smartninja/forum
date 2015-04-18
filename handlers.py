@@ -32,7 +32,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-        topics = Topic.query(Topic.deleted==False).order(Topic.created).fetch()
+        topics = Topic.query(Topic.deleted==False).order(-Topic.created).fetch()
         args = {"topics":topics}
         if user:
             args["username"] = user.nickname()
@@ -82,7 +82,8 @@ class NewTopicHandler(BaseHandler):
         title = self.request.get("title")
         content = self.request.get("content")
         tags = self.request.get("all-tags").split(",")
+        author = users.get_current_user().nickname()
         if title and content:
-            t = Topic(title = title, content = content, tags=tags)
+            t = Topic(title = title, content = content, author=author, tags=tags)
             t.put()
             self.redirect("/")

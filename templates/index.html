@@ -4,7 +4,12 @@
 {% block content %}
     {% if username %}
     {% for topic in topics %}
-    <a href="/topic/{{ topic.key.id()}}"><h1>{{ topic.title }} ({{ topic.num_comments }})- {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }}</h1></a>
+    <div class="panel panel-info">
+        <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">{{ topic.title }}</a></div>
+        <div class="panel-body">
+            {{ topic.num_comments }} comments · Created on {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }} by {{ topic.author }}
+        </div>
+    </div>
     {% endfor %}
     {% endif %}
 
