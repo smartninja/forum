@@ -55,12 +55,17 @@ class PostHandler(BaseHandler):
     def post(self, topic_id):
         author = users.get_current_user().nickname()
         content = self.request.get("content")
-        c = Comment(
-            author = author,
-            content = content,
-            the_topic_id = int(topic_id)
-        ).put()
-        self.redirect("/topic/" + str(topic_id))
+
+        if content:
+            c = Comment(
+                author = author,
+                content = content,
+                the_topic_id = int(topic_id)
+            ).put()
+            topic = Topic.get_by_id(int(topic_id)) # wtf now?
+            topic.num_comments = topic.num_comments+1
+            topic.put()
+            self.redirect("/topic/" + str(topic_id))
 
 class NewTopicHandler(BaseHandler):
     def get(self):
