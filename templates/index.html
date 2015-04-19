@@ -2,20 +2,40 @@
 {% block title %} Main {% endblock title %}
 
 {% block content %}
+    <h2>SmartNinja Community forum</h2>
+
+    <p>
+        Forum za udeležence SmartNinja tečajev. Tukaj lahko postavljate vprašanja, objavljate svoje domače naloge,
+        pomagate ostalim, delite zanimive vsebine in še kaj :)
+    </p>
+
+    <br>
+
     {% if username %}
-    {% for topic in topics %}
-    <div class="panel panel-info">
-        <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">{{ topic.title }}</a></div>
-        <div class="panel-body">
-            <p>{{ topic.num_comments }} comments · Posted on {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }} by {{ topic.author }}</p>
-            <p> {% for tag in topic.tags %} {{ tag }}, {% endfor %}</p>
-            {% if admin %}
-            <hr>
-            <p><a href="/delete-topic/{{ topic.key.id() }}">Delete</a></p>
-            {% endif %}
+        {% for topic in topics %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <a href="/topic/{{ topic.key.id()}}"><h3>{{ topic.title }}</h3></a>
+            </div>
+
+            <div class="panel-body">
+                <p>{{ topic.num_comments }} comments · Posted on {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }} by {{ topic.author }}</p>
+
+                {% if topic.tags %}
+                    <p>{% for tag in topic.tags %}
+                        <a href="#">{{ tag }}</a> &emsp;
+                    {% endfor %}</p>
+                {% endif %}
+
+                {% if admin %}
+                <hr>
+                <p><a href="/delete-topic/{{ topic.key.id() }}">Delete</a></p>
+                {% endif %}
+            </div>
         </div>
-    </div>
-    {% endfor %}
+        {% endfor %}
+    {% else %}
+        <p>Prijavi se za ogled foruma in komentiranje.</p>
     {% endif %}
 
     <hr>

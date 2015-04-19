@@ -2,7 +2,6 @@ import webapp2
 import os
 import jinja2
 from google.appengine.api import users
-from google.appengine.ext import ndb
 from settings import ADMINS
 import filters
 
@@ -32,6 +31,7 @@ class BaseHandler(webapp2.RequestHandler):
         template = jinja_env.get_template(view_filename)
         self.response.out.write(template.render(params))
 
+
 class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
@@ -47,6 +47,7 @@ class MainHandler(BaseHandler):
         else:
             args["login"] = users.create_login_url("/")
         self.render_template("index.html", args)
+
 
 class TopicHandler(BaseHandler):
     def get(self, topic_id):
@@ -77,6 +78,7 @@ class TopicHandler(BaseHandler):
             topic.put()
             self.redirect("/topic/" + str(topic_id))
 
+
 class NewTopicHandler(BaseHandler):
     def get(self):
         args = {}
@@ -97,6 +99,7 @@ class NewTopicHandler(BaseHandler):
             t = Topic(title = title, content = content, author=author, tags=tags)
             t.put()
             self.redirect("/")
+
 
 class DeleteTopicHandler(BaseHandler):
     def get(self, topic_id):
