@@ -5,7 +5,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading panel-main-h"><a href="/topic/{{ topic.key.id()}}">{{ topic.title }}</a></div>
     <div class="panel-body panel-main-b">
-        {{ topic.content }}
+        {{ topic.content|nl2br }}
     </div>
 </div>
 <div class="new-comment-area">
@@ -22,7 +22,7 @@
     <div class="panel panel-info">
     <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">Posted by {{ comment.author }} ({{ comment.created }})</a></div>
     <div class="panel-body">
-        {{ comment.content }}
+        {{ comment.content|nl2br }}
     </div>
 </div>
     {% endfor %}

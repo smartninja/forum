@@ -8,6 +8,7 @@ class Topic(ndb.Model):
     deleted = ndb.BooleanProperty(default=False)
     tags = ndb.StringProperty(repeated=True)
     num_comments = ndb.IntegerProperty(default=0)
+    updated = ndb.DateTimeProperty()
 
 class Comment(ndb.Model):
     author = ndb.StringProperty()
@@ -15,3 +16,4 @@ class Comment(ndb.Model):
     content = ndb.TextProperty()
     deleted = ndb.BooleanProperty(default=False)
     the_topic_id = ndb.IntegerProperty()
+    updated = ndb.DateTimeProperty()

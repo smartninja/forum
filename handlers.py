@@ -3,12 +3,14 @@ import os
 import jinja2
 from google.appengine.api import users
 from google.appengine.ext import ndb
+import filters
 
 from models import Topic, Comment
 
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=False)
+jinja_env.filters['nl2br'] = filters.nl2br
 
 
 class BaseHandler(webapp2.RequestHandler):
@@ -49,6 +51,7 @@ class PostHandler(BaseHandler):
             topic = Topic.get_by_id(int(topic_id))
             args["topic"] = topic
             args["username"] = user.nickname()
+            args["logout"] = users.create_logout_url("/")
             args["comments"] = Comment.query(Comment.deleted==False and Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
         self.render_template("topic.html", args)
 
@@ -62,7 +65,7 @@ class PostHandler(BaseHandler):
                 content = content,
                 the_topic_id = int(topic_id)
             ).put()
-            topic = Topic.get_by_id(int(topic_id)) # wtf now?
+            topic = Topic.get_by_id(int(topic_id))
             topic.num_comments = topic.num_comments+1
             topic.put()
             self.redirect("/topic/" + str(topic_id))
