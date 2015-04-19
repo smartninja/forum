@@ -3,9 +3,11 @@
 
 {% block content %}
 <div class="panel panel-primary">
-    <div class="panel-heading panel-main-h"><a href="/topic/{{ topic.key.id()}}">{{ topic.title }}</a></div>
+    <div class="panel-heading panel-main-h">{{ topic.title }}</div>
     <div class="panel-body panel-main-b">
         {{ topic.content|nl2br }}
+        <br>
+        - {{ topic.author }}
     </div>
 </div>
 <div class="new-comment-area">
