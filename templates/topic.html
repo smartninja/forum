@@ -22,9 +22,13 @@
     <br>
     {% for comment in comments %}
     <div class="panel panel-info">
-    <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">Posted by {{ comment.author }} ({{ comment.created }})</a></div>
+    <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">Posted by {{ comment.author }} ({{ comment.created.date() }} - {{ comment.created.time().hour }}:{{ comment.created.time().minute }})</a></div>
     <div class="panel-body">
         {{ comment.content|nl2br }}
+        {% if admin %}
+        <hr>
+        <a href="/delete-comment/{{ comment.key.id() }}">Delete</a>
+        {% endif %}
     </div>
 </div>
     {% endfor %}

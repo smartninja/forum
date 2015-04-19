@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} Delete {% endblock title %}
+
+{% block content %}
+<h1>Please confirm you want to delete this</h1>
+
+<form name="delete" method="post">
+    <input type="submit" value="Delete" class="btn btn-danger">
+</form>
+
+{% endblock %}

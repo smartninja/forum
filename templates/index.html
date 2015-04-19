@@ -9,6 +9,10 @@
         <div class="panel-body">
             <p>{{ topic.num_comments }} comments · Posted on {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }} by {{ topic.author }}</p>
             <p> {% for tag in topic.tags %} {{ tag }}, {% endfor %}</p>
+            {% if admin %}
+            <hr>
+            <p><a href="/delete-topic/{{ topic.key.id() }}">Delete</a></p>
+            {% endif %}
         </div>
     </div>
     {% endfor %}

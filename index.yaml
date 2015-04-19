@@ -12,6 +12,12 @@ indexes:
 
 - kind: Comment
   properties:
+  - name: deleted
+  - name: the_topic_id
+  - name: created
+
+- kind: Comment
+  properties:
   - name: the_topic_id
   - name: created
 

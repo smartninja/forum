@@ -3,6 +3,7 @@ import os
 import jinja2
 from google.appengine.api import users
 from google.appengine.ext import ndb
+from settings import ADMINS
 import filters
 
 from models import Topic, Comment
@@ -36,14 +37,18 @@ class MainHandler(BaseHandler):
         user = users.get_current_user()
         topics = Topic.query(Topic.deleted==False).order(-Topic.created).fetch()
         args = {"topics":topics}
+
         if user:
             args["username"] = user.nickname()
             args["logout"] = users.create_logout_url("/")
+            if user.nickname() in ADMINS:
+                args["admin"]=True
+
         else:
             args["login"] = users.create_login_url("/")
         self.render_template("index.html", args)
 
-class PostHandler(BaseHandler):
+class TopicHandler(BaseHandler):
     def get(self, topic_id):
         user = users.get_current_user()
         if user:
@@ -52,7 +57,9 @@ class PostHandler(BaseHandler):
             args["topic"] = topic
             args["username"] = user.nickname()
             args["logout"] = users.create_logout_url("/")
-            args["comments"] = Comment.query(Comment.deleted==False and Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
+            args["comments"] = Comment.query(Comment.deleted==False, Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
+            if user.nickname() in ADMINS:
+                args["admin"]=True
         self.render_template("topic.html", args)
 
     def post(self, topic_id):
@@ -90,3 +97,28 @@ class NewTopicHandler(BaseHandler):
             t = Topic(title = title, content = content, author=author, tags=tags)
             t.put()
             self.redirect("/")
+
+class DeleteTopicHandler(BaseHandler):
+    def get(self, topic_id):
+        user = users.get_current_user().nickname()
+        if user in ADMINS:
+            self.render_template("delete.html")
+
+    def post(self, topic_id):
+        topic = Topic.get_by_id(int(topic_id))
+        topic.deleted = True
+        topic.put()
+        self.redirect("/")
+
+
+class DeleteCommentHandler(BaseHandler):
+    def get(self, comment_id):
+        user = users.get_current_user().nickname()
+        if user in ADMINS:
+            self.render_template("delete.html")
+
+    def post(self, comment_id):
+        comment = Comment.get_by_id(int(comment_id))
+        comment.deleted = True
+        comment.put()
+        self.redirect("/")
