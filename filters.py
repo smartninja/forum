@@ -1,8 +1,9 @@
 import re
 from jinja2 import evalcontextfilter, Markup, escape
- 
+from libs import markdown
+
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
- 
+
 @evalcontextfilter
 def nl2br(eval_ctx, value):
     result = u'\n\n'.join(u'<p>%s</p>' % p.replace('\n', '<br>\n')
@@ -10,3 +11,7 @@ def nl2br(eval_ctx, value):
     if eval_ctx.autoescape:
         result = Markup(result)
     return result
+
+@evalcontextfilter
+def markitdown(eval_ctx, value):
+    return markdown.markdown(value)

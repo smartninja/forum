@@ -24,7 +24,7 @@
     <div class="panel panel-info">
     <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">Posted by {{ comment.author }} ({{ comment.created.date() }} - {{ comment.created.time().hour }}:{{ comment.created.time().minute }})</a></div>
     <div class="panel-body">
-        {{ comment.content|nl2br }}
+        {{ comment.content|markdown }}
         {% if admin %}
         <hr>
         <a href="/delete-comment/{{ comment.key.id() }}">Delete</a>
