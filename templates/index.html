@@ -15,7 +15,7 @@
         {% for topic in topics %}
         <div class="panel panel-info">
             <div class="panel-heading">
-                <a href="/topic/{{ topic.key.id()}}"><h3>{{ topic.title }}</h3></a>
+                <h3 class="panel-title"><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></h3>
             </div>
 
             <div class="panel-body">
@@ -26,12 +26,13 @@
                         <a href="#">{{ tag }}</a> &emsp;
                     {% endfor %}</p>
                 {% endif %}
-
-                {% if admin %}
-                <hr>
-                <p><a href="/delete-topic/{{ topic.key.id() }}">Delete</a></p>
-                {% endif %}
             </div>
+
+            {% if admin %}
+            <div class="panel-footer text-right">
+                <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
     {% else %}

@@ -5,7 +5,7 @@
 <div class="panel panel-primary">
     <div class="panel-heading panel-main-h">{{ topic.title }}</div>
     <div class="panel-body panel-main-b">
-        {{ topic.content|nl2br }}
+        {{ topic.content|markdown }}
         <br>
         - {{ topic.author }}
     </div>
@@ -22,15 +22,18 @@
     <br>
     {% for comment in comments %}
     <div class="panel panel-info">
-    <div class="panel-heading"><a href="/topic/{{ topic.key.id()}}">Posted by {{ comment.author }} ({{ comment.created.date() }} - {{ comment.created.time().hour }}:{{ comment.created.time().minute }})</a></div>
-    <div class="panel-body">
-        {{ comment.content|markdown }}
+        <div class="panel-heading">
+            <a href="/topic/{{ topic.key.id()}}">Posted by <strong>{{ comment.author }}</strong> ({{ comment.created.strftime('%d.%m.%Y - %H:%I') }})</a>
+        </div>
+        <div class="panel-body">
+            {{ comment.content|markdown }}
+        </div>
         {% if admin %}
-        <hr>
-        <a href="/delete-comment/{{ comment.key.id() }}">Delete</a>
+        <div class="panel-footer text-right">
+            <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+        </div>
         {% endif %}
     </div>
-</div>
     {% endfor %}
 
 {% endblock content %}
