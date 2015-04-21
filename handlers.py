@@ -9,7 +9,6 @@ from models import Topic, Comment
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=False)
-jinja_env.filters['nl2br'] = filters.nl2br
 jinja_env.filters['markdown'] = filters.markitdown
 
 class BaseHandler(webapp2.RequestHandler):
@@ -123,4 +122,4 @@ class DeleteCommentHandler(BaseHandler):
         comment = Comment.get_by_id(int(comment_id))
         comment.deleted = True
         comment.put()
-        self.redirect("/")
+        self.redirect("/topic/" + str(comment.the_topic_id))
