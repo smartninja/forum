@@ -16,8 +16,10 @@ from __future__ import division
 from __future__ import unicode_literals
 import logging
 import re
-from . import util
-from .blockparser import BlockParser
+
+from libs.markdown import util
+from libs.markdown.blockparser import BlockParser
+
 
 logger = logging.getLogger('MARKDOWN')
 

@@ -8,7 +8,9 @@ import sys
 import optparse
 import codecs
 import warnings
-import markdown
+
+from libs import markdown
+
 try:
     import yaml
 except ImportError:  # pragma: no cover

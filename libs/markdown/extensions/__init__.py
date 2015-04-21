@@ -4,8 +4,9 @@ Extensions
 """
 
 from __future__ import unicode_literals
-from ..util import parseBoolValue
 import warnings
+
+from libs.markdown.util import parseBoolValue
 
 
 class Extension(object):

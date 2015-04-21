@@ -43,9 +43,11 @@ So, we apply the expressions in the following order:
 
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from . import util
-from . import odict
 import re
+
+from libs.markdown import odict, util
+
+
 try:  # pragma: no cover
     from urllib.parse import urlparse, urlunparse
 except ImportError:  # pragma: no cover

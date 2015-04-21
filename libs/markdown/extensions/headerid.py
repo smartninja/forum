@@ -17,11 +17,12 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import warnings
+
 from . import Extension
-from ..treeprocessors import Treeprocessor
+from libs.markdown.treeprocessors import Treeprocessor
 from ..util import parseBoolValue
 from .toc import slugify, unique, stashedHTML2text
-import warnings
 
 
 class HeaderIdTreeprocessor(Treeprocessor):

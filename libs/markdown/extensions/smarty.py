@@ -83,9 +83,9 @@ smartypants.py license:
 
 from __future__ import unicode_literals
 from . import Extension
-from ..inlinepatterns import HtmlPattern
-from ..odict import OrderedDict
-from ..treeprocessors import InlineProcessor
+from libs.markdown.inlinepatterns import HtmlPattern
+from libs.markdown.odict import OrderedDict
+from libs.markdown.treeprocessors import InlineProcessor
 
 
 # Constants for quote education.

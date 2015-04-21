@@ -1,6 +1,6 @@
 import re
 from jinja2 import evalcontextfilter, Markup, escape
-import markdown
+from libs import markdown
 
 _paragraph_re = re.compile(r'(?:\r\n|\r|\n){2,}')
 

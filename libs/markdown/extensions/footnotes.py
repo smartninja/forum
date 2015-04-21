@@ -15,14 +15,16 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import re
+
 from . import Extension
 from ..preprocessors import Preprocessor
 from ..inlinepatterns import Pattern
 from ..treeprocessors import Treeprocessor
 from ..postprocessors import Postprocessor
 from ..util import etree, text_type
-from ..odict import OrderedDict
-import re
+from libs.markdown.odict import OrderedDict
+
 
 FN_BACKLINK_TEXT = "zz1337820767766393qq"
 NBSP_PLACEHOLDER = "qq3936677670287331zz"

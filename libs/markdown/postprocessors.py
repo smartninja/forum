@@ -10,9 +10,9 @@ processing.
 
 from __future__ import absolute_import
 from __future__ import unicode_literals
-from . import util
-from . import odict
 import re
+
+from libs.markdown import odict, util
 
 
 def build_postprocessors(md_instance, **kwargs):

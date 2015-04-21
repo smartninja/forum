@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from __future__ import absolute_import
-from . import util
-from . import odict
+from libs.markdown import odict, util
 
 
 class State(list):

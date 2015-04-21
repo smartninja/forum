@@ -1,7 +1,8 @@
 from __future__ import unicode_literals
 from __future__ import absolute_import
-from . import util
 from copy import deepcopy
+
+from libs.markdown import util
 
 
 class OrderedDict(dict):
