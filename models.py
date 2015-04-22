@@ -1,5 +1,6 @@
 from google.appengine.ext import ndb
 
+
 class Topic(ndb.Model):
     title = ndb.StringProperty()
     content = ndb.TextProperty()
@@ -9,6 +10,7 @@ class Topic(ndb.Model):
     tags = ndb.StringProperty(repeated=True)
     num_comments = ndb.IntegerProperty(default=0)
     updated = ndb.DateTimeProperty()
+
 
 class Comment(ndb.Model):
     author = ndb.StringProperty()

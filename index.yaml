@@ -16,27 +16,6 @@ indexes:
   - name: the_topic_id
   - name: created
 
-- kind: Comment
-  properties:
-  - name: the_topic_id
-  - name: created
-
-- kind: Comment
-  properties:
-  - name: topic
-  - name: created
-
-- kind: Comment
-  properties:
-  - name: topic
-  - name: created
-    direction: desc
-
-- kind: Topic
-  properties:
-  - name: deleted
-  - name: created
-
 - kind: Topic
   properties:
   - name: deleted

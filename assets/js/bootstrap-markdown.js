@@ -1172,8 +1172,8 @@
             }
 
             // transform selection and set the cursor into chunked text
-            if (content.substr(selected.start-4,4) === '```\n'
-                && content.substr(selected.end,4) === '\n```') {
+            if (content.substr(selected.start-4,4) === '    '
+                && content.substr(selected.end,4) === '    ') {
               e.setSelection(selected.start-4, selected.end+4);
               e.replaceSelection(chunk);
               cursor = selected.start-4;
@@ -1183,7 +1183,7 @@
               e.replaceSelection(chunk);
               cursor = selected.start-1;
             } else if (content.indexOf('\n') > -1) {
-              e.replaceSelection('```\n'+chunk+'\n```');
+              e.replaceSelection('    '+chunk+'    ');
               cursor = selected.start+4;
             } else {
               e.replaceSelection('`'+chunk+'`');
