@@ -2,38 +2,38 @@
 {% block title %} {{ topic.title }} {% endblock title %}
 
 {% block content %}
-<div class="panel panel-primary">
-    <div class="panel-heading panel-main-h">{{ topic.title }}</div>
-    <div class="panel-body panel-main-b">
-        {{ topic.content|markdown }}
-        <br>
-        - {{ topic.author }}
+    <div class="panel panel-success">
+        <div class="panel-heading panel-main-h">{{ topic.title }}</div>
+        <div class="panel-body panel-main-b">
+            {{ topic.content|markdown }}
+            <br>
+            - {{ topic.author }}
+        </div>
     </div>
-</div>
-<div class="new-comment-area" style="padding: 0 10px;">
-    <hr>
-    <form name="new-comment" method="post">
-        <textarea name="content" placeholder="Komentiraj" class="form-control markdown" rows="5"></textarea><br>
-        <input class="pull-right btn btn-info" type="submit" value="Objavi">
-    </form>
-    <br>
-    <hr>
-</div>
-    <br>
+
     {% for comment in comments %}
     <div class="panel panel-info">
         <div class="panel-heading">
+            {% if admin %}
+            <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+            {% endif %}
             <a href="/topic/{{ topic.key.id()}}">Posted by <strong>{{ comment.author }}</strong> ({{ comment.created.strftime('%d.%m.%Y - %H:%I') }})</a>
         </div>
         <div class="panel-body">
             {{ comment.content|markdown }}
         </div>
-        {% if admin %}
-        <div class="panel-footer text-right">
-            <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
-        </div>
-        {% endif %}
     </div>
     {% endfor %}
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Add new comment</h3>
+        </div>
+        <div class="panel-body">
+            <form name="new-comment" method="post">
+                <textarea name="content" placeholder="Komentiraj" class="form-control markdown" rows="5"></textarea><br>
+                <input class="btn btn-primary" type="submit" value="Objavi">
+            </form>
+        </div>
+    </div>
 {% endblock content %}

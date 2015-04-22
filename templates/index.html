@@ -4,41 +4,41 @@
 {% block content %}
     <h2>SmartNinja Community forum</h2>
 
-    <p>
-        Forum za udeležence SmartNinja tečajev. Tukaj lahko postavljate vprašanja, objavljate svoje domače naloge,
-        pomagate ostalim, delite zanimive vsebine in še kaj :)
-    </p>
+    <p>Forum za udeležence SmartNinja tečajev. Tukaj lahko postavljate vprašanja, objavljate svoje domače naloge, pomagate ostalim, delite zanimive vsebine in še kaj :)</p>
 
     <br>
 
     {% if username %}
-        {% for topic in topics %}
-        <div class="panel panel-info">
+        <div class="panel panel-success">
             <div class="panel-heading">
-                <h3 class="panel-title"><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></h3>
+                <h3 class="panel-title">Topics</h3>
             </div>
-
-            <div class="panel-body">
-                <p>{{ topic.num_comments }} comments · Posted on {{ topic.created.day }}.{{ topic.created.month }}.{{ topic.created.year }} by {{ topic.author }}</p>
-
-                {% if topic.tags %}
-                    <p>{% for tag in topic.tags %}
-                        <a href="#">{{ tag }}</a> &emsp;
-                    {% endfor %}</p>
-                {% endif %}
-            </div>
-
-            {% if admin %}
-            <div class="panel-footer text-right">
-                <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
-            </div>
-            {% endif %}
+            <table class="table table-bordered">
+                <tr>
+                    <th width="30%">Title</th>
+                    <th class="text-center"># of comments</th>
+                    <th class="text-center">Started on</th>
+                    <th class="text-center">Started by</th>
+                    {% if admin %}
+                    <th class="text-right">Admin</th>
+                    {% endif %}
+                </tr>
+                {% for topic in topics %}
+                <tr>
+                    <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></td>
+                    <td class="text-center"><span class="glyphicon glyphicon-comment"></span> {{ topic.num_comments }} comments</td>
+                    <td class="text-center">{{ topic.created.strftime('%d.%m.%Y - %H:%I') }}</td>
+                    <td class="text-center">{{ topic.author }}</td>
+                    {% if admin %}
+                    <td class="text-right">
+                        <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                    </td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            </table>
         </div>
-        {% endfor %}
     {% else %}
         <p>Prijavi se za ogled foruma in komentiranje.</p>
     {% endif %}
-
-    <hr>
-
 {% endblock content %}
