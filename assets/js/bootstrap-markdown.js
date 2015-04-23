@@ -1,5 +1,5 @@
 /* ===================================================
- * bootstrap-markdown.js v2.8.0
+ * bootstrap-markdown.js v2.9.0
  * http://github.com/toopay/bootstrap-markdown
  * ===================================================
  * Copyright 2013-2015 Taufan Aditya
@@ -219,6 +219,8 @@
     } else {
       $editor.removeClass('md-fullscreen-mode');
       $('body').removeClass('md-nooverflow');
+
+      if (this.$isPreview == true) this.hidePreview().showPreview()
     }
 
     this.$isFullscreen = mode;
@@ -465,6 +467,12 @@
           content,
           callbackContent;
 
+      if (this.$isPreview == true) {
+        // Avoid sequenced element creation on missused scenario
+        // @see https://github.com/toopay/bootstrap-markdown/issues/170
+        return this;
+      }
+      
       // Give flag that tell the editor enter preview mode
       this.$isPreview = true;
       // Disable all buttons
@@ -1172,8 +1180,8 @@
             }
 
             // transform selection and set the cursor into chunked text
-            if (content.substr(selected.start-4,4) === '    '
-                && content.substr(selected.end,4) === '    ') {
+            if (content.substr(selected.start-4,4) === '```\n'
+                && content.substr(selected.end,4) === '\n```') {
               e.setSelection(selected.start-4, selected.end+4);
               e.replaceSelection(chunk);
               cursor = selected.start-4;
@@ -1183,7 +1191,7 @@
               e.replaceSelection(chunk);
               cursor = selected.start-1;
             } else if (content.indexOf('\n') > -1) {
-              e.replaceSelection('    '+chunk+'    ');
+              e.replaceSelection('```\n'+chunk+'\n```');
               cursor = selected.start+4;
             } else {
               e.replaceSelection('`'+chunk+'`');
