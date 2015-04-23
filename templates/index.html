@@ -13,6 +13,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Topics</h3>
             </div>
+            {% if topics %}
             <table class="table table-bordered">
                 <tr>
                     <th width="25%">Title</th>
@@ -29,9 +30,9 @@
                 <tr>
                     <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a></td>
                     <td class="text-center"><span class="glyphicon glyphicon-comment"></span> {{ topic.num_comments }} comments</td>
-                    <td class="text-center">{{ topic.created.strftime('%d.%m.%Y - %H:%I') }}</td>
+                    <td class="text-center">{{ topic.get_datetime(topic.created).strftime('%d.%m.%Y at %H:%M') }}</td>
                     <td class="text-center">{{ topic.author }}</td>
-                    <td class="text-center">{% if topic.latest_comment_created %}{{ topic.latest_comment_created.strftime('%d.%m.%Y - %H:%I') }}{% endif %}</td>
+                    <td class="text-center">{% if topic.latest_comment_created %}{{ topic.get_datetime(topic.latest_comment_created).strftime('%d.%m.%Y at %H:%M') }}{% endif %}</td>
                     <td class="text-center">{% if topic.latest_comment_author %}{{ topic.latest_comment_author }}{% endif %}</td>
                     {% if admin %}
                     <td class="text-right">
@@ -41,6 +42,11 @@
                 </tr>
                 {% endfor %}
             </table>
+            {% else %}
+            <div class="panel-body text-center">
+                No topics. <a href="/new-topic">Add new one!</a>
+            </div>
+            {% endif %}
         </div>
     {% else %}
         <p>Prijavi se za ogled foruma in komentiranje.</p>
