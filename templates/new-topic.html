@@ -6,11 +6,14 @@
     <h1>Dodaj novo temo</h1>
 
     <form name="new-topic" method="post" id="topic-form">
-        <input type="text" name="title" placeholder="Naslov" class="form-control"><br>
-        <textarea name="content" placeholder="Opis" class="form-control markdown" rows="6"></textarea><br>
+        <div class="form-group">
+            <input type="text" name="title" placeholder="Naslov" class="form-control">
+        </div>
+        <div class="form-group">
+            <textarea name="content" placeholder="Opis" class="form-control markdown" rows="6"></textarea>
+        </div>
+        <input class="btn btn-primary" type="submit" id="submit-topic" value="Objavi">
         <hr>
-
-        <input class="pull-right btn btn-info" type="submit" id="submit-topic" value="Objavi">
         <div class="input-fields-wrap">
             <p>Dodaj tage za objavo, na primer: programiranje, PHP, Python, HTML, ...</p>
             <a class="btn btn-default" id="add-tag">Dodaj tag</a>
