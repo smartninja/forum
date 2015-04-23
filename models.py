@@ -16,6 +16,12 @@ class Topic(ndb.Model):
     latest_comment_author = ndb.StringProperty(indexed=False)
 
     @classmethod
+    def create(cls, title, content, author, tags):
+        topic = cls(title = title, content = content, author = author, tags = tags, latest_comment_author = author)
+        topic.put()
+        return topic
+
+    @classmethod
     def get_datetime(cls, datetime):
         local_timezone = pytz.timezone('Europe/Ljubljana')
         return pytz.utc.localize(datetime).astimezone(local_timezone)

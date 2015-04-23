@@ -101,9 +101,8 @@ class NewTopicHandler(BaseHandler):
         author = users.get_current_user().nickname()
 
         if title and content and tags:
-            t = Topic(title = title, content = content, author=author, tags=tags)
-            t.put()
-            self.redirect("/")
+            topic = Topic.create(title, content, author, tags)
+            self.redirect("/topic/" + str(topic.key.id()))
 
 
 class DeleteTopicHandler(BaseHandler):
