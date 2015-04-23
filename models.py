@@ -34,3 +34,8 @@ class Comment(ndb.Model):
         comment = cls(author = author, content = content, the_topic_id = topic_id)
         comment.put()
         return comment
+
+    @classmethod
+    def get_datetime(cls, datetime):
+        local_timezone = pytz.timezone('Europe/Ljubljana')
+        return pytz.utc.localize(datetime).astimezone(local_timezone)

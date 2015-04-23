@@ -17,7 +17,7 @@
             {% if admin %}
             <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span> Delete</a>
             {% endif %}
-            <a href="/topic/{{ topic.key.id()}}">Posted by <strong>{{ comment.author }}</strong> ({{ comment.created.strftime('%d.%m.%Y - %H:%I') }})</a>
+            <a href="/topic/{{ topic.key.id()}}">Posted by <strong>{{ comment.author }}</strong> ({{ comment.get_datetime(comment.created).strftime('%d.%m.%Y - %H:%M') }})</a>
         </div>
         <div class="panel-body">
             {{ comment.content|markdown }}
