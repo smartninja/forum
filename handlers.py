@@ -34,14 +34,14 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-        topics = Topic.query(Topic.deleted==False).order(-Topic.created).fetch()
+        topics = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created).fetch()
         args = {"topics": topics}
 
         if user:
             args["username"] = user.nickname()
             args["logout"] = users.create_logout_url("/")
             if user.nickname() in ADMINS:
-                args["admin"]=True
+                args["admin"] = True
 
         else:
             args["login"] = users.create_login_url("/")
