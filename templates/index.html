@@ -19,6 +19,8 @@
                     <th class="text-center"># of comments</th>
                     <th class="text-center">Started on</th>
                     <th class="text-center">Started by</th>
+                    <th class="text-center">Latest comment on</th>
+                    <th class="text-center">Latest comment by</th>
                     {% if admin %}
                     <th class="text-right">Admin</th>
                     {% endif %}
@@ -29,6 +31,8 @@
                     <td class="text-center"><span class="glyphicon glyphicon-comment"></span> {{ topic.num_comments }} comments</td>
                     <td class="text-center">{{ topic.created.strftime('%d.%m.%Y - %H:%I') }}</td>
                     <td class="text-center">{{ topic.author }}</td>
+                    <td class="text-center">{{ topic.latest_comment_created.strftime('%d.%m.%Y - %H:%I') }}</td>
+                    <td class="text-center">{{ topic.latest_comment_author }}</td>
                     {% if admin %}
                     <td class="text-right">
                         <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
