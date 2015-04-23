@@ -15,7 +15,7 @@
             </div>
             <table class="table table-bordered">
                 <tr>
-                    <th width="30%">Title</th>
+                    <th width="25%">Title</th>
                     <th class="text-center"># of comments</th>
                     <th class="text-center">Started on</th>
                     <th class="text-center">Started by</th>
@@ -31,8 +31,8 @@
                     <td class="text-center"><span class="glyphicon glyphicon-comment"></span> {{ topic.num_comments }} comments</td>
                     <td class="text-center">{{ topic.created.strftime('%d.%m.%Y - %H:%I') }}</td>
                     <td class="text-center">{{ topic.author }}</td>
-                    <td class="text-center">{{ topic.latest_comment_created.strftime('%d.%m.%Y - %H:%I') }}</td>
-                    <td class="text-center">{{ topic.latest_comment_author }}</td>
+                    <td class="text-center">{% if topic.latest_comment_created %}{{ topic.latest_comment_created.strftime('%d.%m.%Y - %H:%I') }}{% endif %}</td>
+                    <td class="text-center">{% if topic.latest_comment_author %}{{ topic.latest_comment_author }}{% endif %}</td>
                     {% if admin %}
                     <td class="text-right">
                         <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>

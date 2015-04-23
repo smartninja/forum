@@ -3,7 +3,7 @@ from google.appengine.ext import ndb
 
 class Topic(ndb.Model):
     title = ndb.StringProperty()
-    content = ndb.TextProperty()
+    content = ndb.TextProperty(indexed=False)
     author = ndb.StringProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     deleted = ndb.BooleanProperty(default=False)
@@ -13,10 +13,11 @@ class Topic(ndb.Model):
     latest_comment_created = ndb.DateTimeProperty(indexed=False)
     latest_comment_author = ndb.StringProperty(indexed=False)
 
+
 class Comment(ndb.Model):
     author = ndb.StringProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
-    content = ndb.TextProperty()
+    content = ndb.TextProperty(indexed=False)
     deleted = ndb.BooleanProperty(default=False)
     the_topic_id = ndb.IntegerProperty()
     updated = ndb.DateTimeProperty()
