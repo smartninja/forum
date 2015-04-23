@@ -25,6 +25,7 @@
     </div>
     {% endfor %}
 
+    {% if username %}
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3 class="panel-title">Add new comment</h3>
@@ -38,4 +39,8 @@
             </form>
         </div>
     </div>
+    {% else %}
+    <hr>
+    <h3>Za komentiranje se prijavi</h3>
+    {% endif %}
 {% endblock content %}

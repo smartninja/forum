@@ -8,7 +8,9 @@
 
     <br>
 
-    {% if username %}
+    {% if not username %}
+        <p>Prijavi se za ogled foruma in komentiranje.</p>
+    {% endif %}
         <div class="panel panel-success">
             <div class="panel-heading">
                 <h3 class="panel-title">Topics</h3>
@@ -48,7 +50,4 @@
             </div>
             {% endif %}
         </div>
-    {% else %}
-        <p>Prijavi se za ogled foruma in komentiranje.</p>
-    {% endif %}
 {% endblock content %}

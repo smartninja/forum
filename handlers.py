@@ -53,15 +53,18 @@ class TopicHandler(BaseHandler):
     def get(self, topic_id):
         user = users.get_current_user()
 
+        args = {}
+        topic = Topic.get_by_id(int(topic_id))
+        args["topic"] = topic
         if user:
-            args = {}
-            topic = Topic.get_by_id(int(topic_id))
-            args["topic"] = topic
             args["username"] = user.nickname()
             args["logout"] = users.create_logout_url("/")
-            args["comments"] = Comment.query(Comment.deleted==False, Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
             if user.nickname() in ADMINS:
                 args["admin"]=True
+        else:
+            args["login"] = users.create_login_url("/")
+        args["comments"] = Comment.query(Comment.deleted==False, Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
+
 
         self.render_template("topic.html", args)
 
