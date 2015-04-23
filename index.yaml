@@ -8,5 +8,5 @@ indexes:
 - kind: Topic
   properties:
   - name: deleted
-  - name: created
+  - name: latest_comment_created
     direction: desc
