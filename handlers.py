@@ -101,6 +101,10 @@ class NewTopicHandler(BaseHandler):
         title = self.request.get("title")
         content = self.request.get("content")
         tags = self.request.get("all-tags").split(",")
+        instructor = self.request.get("instructor")
+        if instructor:
+            tags.append(instructor)
+
         author = users.get_current_user().nickname()
 
         if title and content and tags:
