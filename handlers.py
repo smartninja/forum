@@ -5,7 +5,8 @@ from google.appengine.api import users
 from settings import ADMINS
 import filters
 
-from models import Topic, Comment
+from models.topic import Topic
+from models.comment import Comment
 
 template_dir = os.path.join(os.path.dirname(__file__), "templates")
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=False)
@@ -74,12 +75,7 @@ class TopicHandler(BaseHandler):
 
         if content:
             comment = Comment.create(author, content, int(topic_id))
-
-            topic = Topic.get_by_id(int(topic_id))
-            topic.num_comments += 1
-            topic.latest_comment_created = comment.created
-            topic.latest_comment_author = comment.author
-            topic.put()
+            topic = Topic.add_comment(int(topic_id), comment.created, comment.author)
 
             self.redirect("/topic/" + str(topic_id))
 
