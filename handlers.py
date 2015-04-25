@@ -37,7 +37,7 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-        topics = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created).fetch()
+        topics = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created2).fetch()
         args = {"topics": topics}
 
         if user:

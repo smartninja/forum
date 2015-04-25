@@ -14,6 +14,7 @@ class Topic(ndb.Model):
     updated = ndb.DateTimeProperty()
     updated_by = ndb.StringProperty()
     latest_comment_created = ndb.DateTimeProperty(auto_now_add=True)
+    latest_comment_created2 = ndb.DateTimeProperty(auto_now_add=True)
     latest_comment_author = ndb.StringProperty(indexed=False)
 
     @classmethod
@@ -26,7 +27,7 @@ class Topic(ndb.Model):
     def add_comment(cls, id, lcc, lca):
         topic = Topic.get_by_id(id)
         topic.num_comments += 1
-        topic.latest_comment_created = lcc
+        topic.latest_comment_created2 = lcc
         topic.latest_comment_author = lca
         topic.put()
 

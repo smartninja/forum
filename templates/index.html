@@ -34,7 +34,7 @@
                     <td class="text-center"><span class="glyphicon glyphicon-comment"></span> {{ topic.num_comments }} comments</td>
                     <td class="text-center">{{ topic.get_datetime(topic.created).strftime('%d.%m.%Y at %H:%M') }}</td>
                     <td class="text-center">{{ topic.author }}</td>
-                    <td class="text-center">{% if topic.latest_comment_created %}{{ topic.get_datetime(topic.latest_comment_created).strftime('%d.%m.%Y at %H:%M') }}{% endif %}</td>
+                    <td class="text-center">{% if topic.latest_comment_created2 %}{{ topic.get_datetime(topic.latest_comment_created2).strftime('%d.%m.%Y at %H:%M') }}{% endif %}</td>
                     <td class="text-center">{% if topic.latest_comment_author %}{{ topic.latest_comment_author }}{% endif %}</td>
                     {% if admin or topic.author == username %}
                     <td class="text-right">
