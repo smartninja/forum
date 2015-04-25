@@ -10,6 +10,7 @@ class Comment(ndb.Model):
     deleted = ndb.BooleanProperty(default=False)
     the_topic_id = ndb.IntegerProperty()
     updated = ndb.DateTimeProperty()
+    updated_by = ndb.StringProperty()
 
     @classmethod
     def create(cls, author, content, topic_id):

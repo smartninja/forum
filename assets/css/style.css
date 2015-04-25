@@ -18,3 +18,8 @@ body
 {
     background:#F2F2F2;
 }
+
+.pull-right
+{
+    margin-right:10px !important;
+}

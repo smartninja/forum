@@ -5,6 +5,8 @@ from google.appengine.api import users
 from settings import ADMINS
 import filters
 
+import datetime
+
 from models.topic import Topic
 from models.comment import Comment
 
@@ -88,10 +90,9 @@ class NewTopicHandler(BaseHandler):
         if user:
             args["username"] = user.nickname()
             args["logout"] = users.create_logout_url("/")
+            self.render_template("new-topic.html", args)
         else:
-            args["login"] = users.create_login_url("/")
-
-        self.render_template("new-topic.html", args)
+            self.redirect("/")
 
     def post(self):
         title = self.request.get("title")
@@ -126,7 +127,7 @@ class DeleteTopicHandler(BaseHandler):
 class DeleteCommentHandler(BaseHandler):
     def get(self, comment_id):
         user = users.get_current_user().nickname()
-        if user in ADMINS:
+        if user in ADMINS or user == Comment.get_by_id(int(comment_id)).author:
             self.render_template("delete.html")
 
     def post(self, comment_id):
@@ -137,5 +138,43 @@ class DeleteCommentHandler(BaseHandler):
         topic = Topic.get_by_id(comment.the_topic_id)
         topic.num_comments -= 1
         topic.put()
+
+        self.redirect("/topic/" + str(comment.the_topic_id))
+
+class EditTopicHandler(BaseHandler):
+    def get(self, topic_id):
+        user = users.get_current_user().nickname()
+        if user in ADMINS or user == Topic.get_by_id(int(topic_id)).author:
+            args = {}
+            args["topic_title"] = Topic.get_by_id(int(topic_id)).title
+            args["topic_content"]  = Topic.get_by_id(int(topic_id)).content
+            args["username"] = user
+            self.render_template("edit-topic.html", args)
+
+    def post(self, topic_id):
+        topic = Topic.get_by_id(int(topic_id))
+        topic.title = self.request.get("title")
+        topic.content = self.request.get("content")
+        topic.updated = datetime.datetime.now()
+        topic.updated_by = users.get_current_user().nickname()
+        topic.put()
+
+        self.redirect("/topic/" + str(topic_id))
+
+class EditCommentHandler(BaseHandler):
+    def get(self, comment_id):
+        user = users.get_current_user().nickname()
+        if user in ADMINS or user == Comment.get_by_id(int(comment_id)).author:
+            args = {}
+            args["comment_content"] = Comment.get_by_id(int(comment_id)).content
+            args["username"] = user
+            self.render_template("edit-comment.html", args)
+
+    def post(self, comment_id):
+        comment = Comment.get_by_id(int(comment_id))
+        comment.content = self.request.get("content")
+        comment.updated = datetime.datetime.now()
+        comment.updated_by = users.get_current_user().nickname()
+        comment.put()
 
         self.redirect("/topic/" + str(comment.the_topic_id))

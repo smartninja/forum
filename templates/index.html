@@ -36,8 +36,9 @@
                     <td class="text-center">{{ topic.author }}</td>
                     <td class="text-center">{% if topic.latest_comment_created %}{{ topic.get_datetime(topic.latest_comment_created).strftime('%d.%m.%Y at %H:%M') }}{% endif %}</td>
                     <td class="text-center">{% if topic.latest_comment_author %}{{ topic.latest_comment_author }}{% endif %}</td>
-                    {% if admin %}
+                    {% if admin or topic.author == username %}
                     <td class="text-right">
+                        <a href="/edit-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
                         <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
                     </td>
                     {% endif %}

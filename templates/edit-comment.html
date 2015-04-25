@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %} Edit Comment {% endblock title %}
+
+{% block content %}
+<h1>Edit comment</h1>
+
+<form method="post">
+    <textarea name="content">{{ comment_content }}</textarea>
+    <input type="submit">
+</form>
+{% endblock content %}

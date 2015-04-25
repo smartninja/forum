@@ -12,6 +12,7 @@ class Topic(ndb.Model):
     tags = ndb.StringProperty(repeated=True)
     num_comments = ndb.IntegerProperty(default=0)
     updated = ndb.DateTimeProperty()
+    updated_by = ndb.StringProperty()
     latest_comment_created = ndb.DateTimeProperty(auto_now_add=True)
     latest_comment_author = ndb.StringProperty(indexed=False)
 
