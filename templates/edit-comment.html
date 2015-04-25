@@ -5,7 +5,9 @@
 <h1>Edit comment</h1>
 
 <form method="post">
-    <textarea name="content">{{ comment_content }}</textarea>
-    <input type="submit">
+    <div class="form-group">
+        <textarea class="form-control" placeholder="Content" name="content">{{ comment_content }}</textarea>
+    </div>
+    <input type="submit" value="Objavi" class="btn btn-info">
 </form>
 {% endblock content %}
