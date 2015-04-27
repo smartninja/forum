@@ -4,7 +4,7 @@
 {% block content %}
     <div class="panel panel-success">
         <div class="panel-heading panel-main-h">{{ topic.title }}
-            {% if admin and topic.locked==False %}
+            {% if admin and topic.closed==False %}
             <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-info btn-xs pull-right close-topic-btn"><span class="glyphicon glyphicon-lock"></span>Close topic</a>
             {% endif %}</div>
         <div class="panel-body panel-main-b">

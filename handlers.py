@@ -197,7 +197,7 @@ class SearchHandler(BaseHandler):
         query = self.request.get("query")
         user = users.get_current_user().nickname()
         args = {}
-        
+
         if user:
             args["username"] = user
         if query:
