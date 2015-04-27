@@ -13,6 +13,7 @@ class Topic(ndb.Model):
     num_comments = ndb.IntegerProperty(default=0)
     updated = ndb.DateTimeProperty()
     updated_by = ndb.StringProperty()
+    closed = ndb.BooleanProperty(default=False)
     latest_comment_created = ndb.DateTimeProperty(auto_now_add=True)
     latest_comment_created2 = ndb.DateTimeProperty(auto_now_add=True)
     latest_comment_author = ndb.StringProperty(indexed=False)

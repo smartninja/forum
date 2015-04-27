@@ -1,18 +1,28 @@
 {% extends "base.html" %}
-{% block title %} Main {% endblock title %}
+{% block title %} Search {% endblock title %}
 
 {% block content %}
-    <h2>SmartNinja Community forum</h2>
 
-    <p>Forum za udeležence SmartNinja tečajev. Tukaj lahko postavljate vprašanja, objavljate svoje domače naloge, pomagate ostalim, delite zanimive vsebine in še kaj :)</p>
+<h1>Iskanje po forumu</h1>
 
-    <br>
+<hr>
 
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <h3 class="panel-title">Topics</h3>
+<form method="post">
+    <div class="row">
+        <div class="col-xs-11">
+            <div class="form-group">
+                <input class="form-control" name="searchbox" value="{{ query }}" placeholder="Iskanje (python, html, css, po inštruktorju...)">
             </div>
-            {% if topics %}
+        </div>
+        <div class="col-xs-1">
+            <input type="submit" value="Išči" class="btn btn-info search-btn visible-lg visible-md">
+        </div>
+    </div>
+</form>
+
+<hr>
+
+{% if topics %}
             <table class="table table-bordered">
                 <tr>
                     <th width="25%">Title</th>
@@ -42,10 +52,5 @@
                 </tr>
                 {% endfor %}
             </table>
-            {% else %}
-            <div class="panel-body text-center">
-                No topics. <a href="/new-topic">Add new one!</a>
-            </div>
-            {% endif %}
-        </div>
+{% endif %}
 {% endblock content %}

@@ -23,3 +23,14 @@ body
 {
     margin-right:10px !important;
 }
+
+.close-topic-btn
+{
+    margin-top:6px;
+}
+
+.search-btn
+{
+    width:100%;
+    font-weight:bold;
+}

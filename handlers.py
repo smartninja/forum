@@ -178,3 +178,37 @@ class EditCommentHandler(BaseHandler):
         comment.put()
 
         self.redirect("/topic/" + str(comment.the_topic_id))
+
+class CloseTopicHandler(BaseHandler):
+    def get(self, topic_id):
+        user = users.get_current_user().nickname()
+        if user in ADMINS:
+            self.render_template("close-topic.html")
+
+    def post(self, topic_id):
+        topic = Topic.get_by_id(int(topic_id))
+        topic.closed=True
+        topic.put()
+        self.redirect("/topic/" + topic_id)
+
+
+class SearchHandler(BaseHandler):
+    def get(self):
+        query = self.request.get("query")
+        user = users.get_current_user().nickname()
+        args = {}
+        
+        if user:
+            args["username"] = user
+        if query:
+            args["query"] = query
+            topics = Topic.query(Topic.tags == query).order(-Topic.latest_comment_created2).fetch()
+            if topics:
+                args["topics"] = topics
+            self.render_template("search.html", args)
+        else:
+            self.render_template("search.html")
+
+    def post(self):
+        query = self.request.get("searchbox")
+        self.redirect("search?query=" + str(query))
