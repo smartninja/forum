@@ -1,6 +1,14 @@
 import webapp2
-from handlers import MainHandler, TopicHandler, NewTopicHandler, \
-    DeleteTopicHandler, DeleteCommentHandler, EditTopicHandler, EditCommentHandler, CloseTopicHandler, SearchHandler
+from handlers.BasicHandlers.SearchHandler import SearchHandler
+from handlers.BasicHandlers.MainHandler import MainHandler
+from handlers.TopicHandlers.TopicHandler import TopicHandler
+from handlers.TopicHandlers.NewTopicHandler import NewTopicHandler
+from handlers.TopicHandlers.DeleteTopicHandler import DeleteTopicHandler
+from handlers.TopicHandlers.EditTopicHandler import EditTopicHandler
+from handlers.TopicHandlers.CloseTopicHandler import CloseTopicHandler
+from handlers.CommentHandlers.DeleteCommentHandler import DeleteCommentHandler
+from handlers.CommentHandlers.EditCommentHandler import EditCommentHandler
+
 
 app = webapp2.WSGIApplication([
     webapp2.Route('/', MainHandler),
