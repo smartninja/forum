@@ -5,8 +5,12 @@
     <div class="panel panel-success">
         <div class="panel-heading panel-main-h">{{ topic.title }}
             {% if admin and topic.closed==False %}
-            <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs pull-right" title="Close topic"><span class="glyphicon glyphicon-lock"></span></a>
-            {% endif %}</div>
+            <div class="btn-group pull-right">
+                <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs" title="Close topic"><span class="glyphicon glyphicon-lock"></span></a>
+                <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs" title="Delete topic"><span class="glyphicon glyphicon-remove"></span></a>
+            </div>
+            {% endif %}
+        </div>
         <div class="panel-body panel-main-b">
             {{ topic.content|markdown }}
             <br>
