@@ -27,7 +27,7 @@
                 </tr>
                 {% for topic in topics %}
                 <tr>
-                    <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }} {% if topic.closed %} <span class="label label-default">Closed</span> {% endif %}</a></td>
+                    <td><a href="/topic/{{ topic.key.id() }}">{{ topic.title }}</a>{% if topic.closed %} <span class="label label-default">Closed</span>{% endif %}</td>
                     <td class="text-center"><span class="glyphicon glyphicon-comment"></span> {{ topic.num_comments }} comments</td>
                     <td class="text-center">{{ topic.get_datetime(topic.created).strftime('%d.%m.%Y at %H:%M') }}</td>
                     <td class="text-center">{{ topic.author }}</td>
@@ -35,8 +35,13 @@
                     <td class="text-center">{% if topic.latest_comment_author %}{{ topic.latest_comment_author }}{% endif %}</td>
                     {% if admin or topic.author == username %}
                     <td class="text-right">
-                        <a href="/edit-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                        <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                        <div class="btn-group">
+                            {% if topic.closed == False %}
+                            <a href="/edit-topic/{{ topic.key.id() }}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                            <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-lock"></span> Close</a>
+                            {% endif %}
+                            <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                        </div>
                     </td>
                     {% endif %}
                 </tr>

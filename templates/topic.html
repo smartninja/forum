@@ -5,7 +5,7 @@
     <div class="panel panel-success">
         <div class="panel-heading panel-main-h">{{ topic.title }}
             {% if admin and topic.closed==False %}
-            <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-info btn-xs pull-right close-topic-btn"><span class="glyphicon glyphicon-lock"></span>Close topic</a>
+            <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs pull-right close-topic-btn"><span class="glyphicon glyphicon-lock"></span> Close topic</a>
             {% endif %}</div>
         <div class="panel-body panel-main-b">
             {{ topic.content|markdown }}
@@ -15,13 +15,15 @@
     </div>
 
     {% for comment in comments %}
-    <div class="panel panel-info">
+    <div id="{{ comment.key.id() }}" class="panel panel-info">
         <div class="panel-heading">
             {% if admin or comment.author == username %}
-            <a href="/edit-comment/{{ comment.key.id() }}" class="btn btn-warning btn-xs pull-right"><span class="glyphicon glyphicon-pencil"></span>Edit</a>
-            <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs pull-right"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+            <div class="btn-group pull-right">
+                <a href="/edit-comment/{{ comment.key.id() }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
+                <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+            </div>
             {% endif %}
-            <a href="/topic/{{ topic.key.id()}}">Posted by <strong>{{ comment.author }}</strong> ({{ comment.get_datetime(comment.created).strftime('%d.%m.%Y at %H:%M') }})</a>
+            <a href="/topic/{{ topic.key.id()}}#{{ comment.key.id() }}">Posted by <strong>{{ comment.author }}</strong> ({{ comment.get_datetime(comment.created).strftime('%d.%m.%Y at %H:%M') }})</a>
         </div>
         <div class="panel-body">
             {{ comment.content|markdown }}
