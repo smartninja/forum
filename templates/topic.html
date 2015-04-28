@@ -5,7 +5,7 @@
     <div class="panel panel-success">
         <div class="panel-heading panel-main-h">{{ topic.title }}
             {% if admin and topic.closed==False %}
-            <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs pull-right close-topic-btn"><span class="glyphicon glyphicon-lock"></span> Close topic</a>
+            <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs pull-right" title="Close topic"><span class="glyphicon glyphicon-lock"></span></a>
             {% endif %}</div>
         <div class="panel-body panel-main-b">
             {{ topic.content|markdown }}
@@ -19,8 +19,8 @@
         <div class="panel-heading">
             {% if admin or comment.author == username %}
             <div class="btn-group pull-right">
-                <a href="/edit-comment/{{ comment.key.id() }}" class="btn btn-warning btn-xs"><span class="glyphicon glyphicon-pencil"></span> Edit</a>
-                <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+                <a href="/edit-comment/{{ comment.key.id() }}" class="btn btn-warning btn-xs" title="Edit comment"><span class="glyphicon glyphicon-pencil"></span></a>
+                <a href="/delete-comment/{{ comment.key.id() }}" class="btn btn-danger btn-xs" title="Delete comment"><span class="glyphicon glyphicon-remove"></span></a>
             </div>
             {% endif %}
             <a href="/topic/{{ topic.key.id()}}#{{ comment.key.id() }}">Posted by <strong>{{ comment.author }}</strong> ({{ comment.get_datetime(comment.created).strftime('%d.%m.%Y at %H:%M') }})</a>
