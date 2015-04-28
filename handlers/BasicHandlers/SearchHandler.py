@@ -13,7 +13,7 @@ class SearchHandler(BaseHandler):
             args["username"] = user
         if query:
             args["query"] = query
-            topics = Topic.query(Topic.tags == query).order(-Topic.latest_comment_created2).fetch()
+            topics = Topic.query(Topic.tags == query, Topic.deleted == False).order(-Topic.latest_comment_created2).fetch()
             if topics:
                 args["topics"] = topics
             self.render_template("search.html", args)
