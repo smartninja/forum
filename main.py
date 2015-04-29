@@ -8,6 +8,7 @@ from handlers.TopicHandlers.EditTopicHandler import EditTopicHandler
 from handlers.TopicHandlers.CloseTopicHandler import CloseTopicHandler
 from handlers.CommentHandlers.DeleteCommentHandler import DeleteCommentHandler
 from handlers.CommentHandlers.EditCommentHandler import EditCommentHandler
+from handlers.TopicHandlers.OpenTopicHandler import OpenTopicHandler
 
 
 app = webapp2.WSGIApplication([
@@ -20,4 +21,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/edit-comment/<comment_id:\d+>", EditCommentHandler),
     webapp2.Route("/close-topic/<topic_id:\d+>", CloseTopicHandler),
     webapp2.Route("/search", SearchHandler),
+    webapp2.Route("/open-topic/<topic_id:\d+>", OpenTopicHandler),
 ], debug=True)

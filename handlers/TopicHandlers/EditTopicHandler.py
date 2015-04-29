@@ -7,12 +7,13 @@ from settings import ADMINS
 
 class EditTopicHandler(BaseHandler):
     def get(self, topic_id):
-        user = users.get_current_user().nickname()
-        if user in ADMINS or user == Topic.get_by_id(int(topic_id)).author:
+        user = users.get_current_user()
+        if user.nickname() in ADMINS or user.nickname() == Topic.get_by_id(int(topic_id)).author:
             args = {}
             args["topic_title"] = Topic.get_by_id(int(topic_id)).title
             args["topic_content"]  = Topic.get_by_id(int(topic_id)).content
             args["username"] = user
+
             self.render_template("edit-topic.html", args)
 
     def post(self, topic_id):
