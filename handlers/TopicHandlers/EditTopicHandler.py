@@ -12,7 +12,9 @@ class EditTopicHandler(BaseHandler):
             args = {}
             args["topic_title"] = Topic.get_by_id(int(topic_id)).title
             args["topic_content"]  = Topic.get_by_id(int(topic_id)).content
-            args["username"] = user
+            args["tags"] = Topic.get_by_id(int(topic_id)).tags
+            args["username"] = user.nickname()
+
 
             self.render_template("edit-topic.html", args)
 
@@ -20,6 +22,7 @@ class EditTopicHandler(BaseHandler):
         topic = Topic.get_by_id(int(topic_id))
         topic.title = self.request.get("title")
         topic.content = self.request.get("content")
+        topic.tags = self.request.get("all-tags").split(",")
         topic.updated = datetime.datetime.now()
         topic.updated_by = users.get_current_user().nickname()
         topic.put()
