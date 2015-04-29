@@ -28,3 +28,5 @@ class NewTopicHandler(BaseHandler):
         if title and content and tags:
             topic = Topic.create(title, content, author, tags)
             self.redirect("/topic/" + str(topic.key.id()))
+        else:
+            self.redirect('/')
