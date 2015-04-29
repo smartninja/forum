@@ -6,11 +6,17 @@ from models.topic import Topic
 class SearchHandler(BaseHandler):
     def get(self):
         query = self.request.get("query")
-        user = users.get_current_user().nickname()
+        user = users.get_current_user()
         args = {}
 
         if user:
-            args["username"] = user
+            args["username"] = user.nickname()
+            args["logout"] = users.create_logout_url("/")
+
+        else:
+            args["login"] = users.create_login_url("/")
+
+
         if query:
             args["query"] = query
             topics = Topic.query(Topic.tags == query, Topic.deleted == False).order(-Topic.latest_comment_created2).fetch()
