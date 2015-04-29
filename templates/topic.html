@@ -4,9 +4,12 @@
 {% block content %}
     <div class="panel panel-success">
         <div class="panel-heading panel-main-h">{{ topic.title }}
-            {% if admin and topic.closed==False %}
-            <div class="btn-group pull-right">
+            {% if admin or topic.author == username %}
+            <div class="btn-group pull-right">{% if topic.closed == False %}
                 <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs" title="Close topic"><span class="glyphicon glyphicon-lock"></span></a>
+                {% else %}
+                <a href="/open-topic/{{ topic.key.id() }}" class="btn btn-success btn-xs" title="Re-open topic"><span class="glyphicon glyphicon-lock"></span></a>
+                {% endif %}
                 <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs" title="Delete topic"><span class="glyphicon glyphicon-remove"></span></a>
             </div>
             {% endif %}
@@ -36,7 +39,7 @@
     {% endfor %}
 
     {% if topic.closed %}
-        <h3>Komentiranje onemogočeno</h3>
+        <h3>Komentiranje je onemogočeno.</h3>
     {% else %}
         {% if username %}
         <div class="panel panel-default">
