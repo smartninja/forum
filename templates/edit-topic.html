@@ -11,6 +11,22 @@
     <div class="form-group">
         <textarea class="form-control markdown" placeholder="Content" name="content">{{ topic_content }}</textarea>
     </div>
-    <input type="submit" value="Objavi" class="btn btn-info">
+
+    <div class="input-fields-wrap">
+            <p>Dodaj tage za objavo, na primer: programiranje, PHP, Python, HTML, ...</p>
+            <a class="btn btn-default" id="add-tag">Dodaj tag</a>
+            <input type="hidden" id="allData" name="all-tags">
+            {% if tags %}
+                {% for tag in tags %}
+                    <div id="addedTags">
+                        <input type="text" value="{{ tag }}" name="tags" placeholder="Add a tag" class="myTag">
+                        <a href="#" class="remove_field btn btn-danger">Remove</a>
+                    </div>
+                    <br>
+                {% endfor %}
+            {% endif %}
+    </div>
+
+    <input type="submit" value="Objavi" id="submit-topic"    class="btn btn-info">
 </form>
 {% endblock content %}
