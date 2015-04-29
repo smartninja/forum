@@ -33,3 +33,5 @@ class TopicHandler(BaseHandler):
             topic = Topic.add_comment(int(topic_id), comment.created, comment.author)
 
             self.redirect("/topic/" + str(topic_id))
+        else:
+            self.redirect('/topic/' + str(topic_id))
