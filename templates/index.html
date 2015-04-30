@@ -33,7 +33,6 @@
                             <th class="text-center">Started by</th>
                             <th class="text-center">Latest comment on</th>
                             <th class="text-center">Latest comment by</th>
-                            <th class="text-right">Edit</th>
                         </tr>
                         {% for topic in topics %}
                         <tr>
@@ -42,19 +41,6 @@
                             <td class="text-center">{{ topic.author }}</td>
                             <td class="text-center">{% if topic.latest_comment_created2 %}{{ topic.get_datetime(topic.latest_comment_created2).strftime('%d.%m.%Y at %H:%M') }}{% endif %}</td>
                             <td class="text-center">{% if topic.latest_comment_author %}{{ topic.latest_comment_author }}{% endif %}</td>
-                            <td class="text-right">
-                                {% if admin or topic.author == username %}
-                                <div class="btn-group">
-                                    {% if topic.closed == False %}
-                                    <a href="/close-topic/{{ topic.key.id() }}" class="btn btn-warning btn-xs" title="Close topic"><span class="glyphicon glyphicon-lock"></span></a>
-                                    {% else %}
-                                    <a href="/open-topic/{{ topic.key.id() }}" class="btn btn-success btn-xs" title="Re-open topic"><span class="glyphicon glyphicon-lock"></span></a>
-                                    {% endif %}
-                                    <a href="/edit-topic/{{ topic.key.id() }}" class="btn btn-primary btn-xs" title="Edit topic"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs" title="Delete topic"><span class="glyphicon glyphicon-remove"></span></a>
-                                </div>
-                                {% endif %}
-                            </td>
                         </tr>
                         {% endfor %}
                     </table>
