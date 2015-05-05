@@ -33,11 +33,15 @@ class EditCommentHandler(BaseHandler):
     @user_required
     def get(self, comment_id):
         user = users.get_current_user()
-        if user in ADMINS or user == Comment.get_by_id(int(comment_id)).author:
+        comment = Comment.get_by_id(int(comment_id))
+
+        if user.nickname() in ADMINS or user.nickname() == comment.author:
             args = {}
-            args["comment_content"] = Comment.get_by_id(int(comment_id)).content
+            args["comment_content"] = comment.content
             self.base_args(user, args)
             self.render_template("edit-comment.html", args)
+        else:
+            self.redirect("/topic/" + str(comment.the_topic_id))
 
     @user_required
     def post(self, comment_id):
