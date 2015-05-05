@@ -66,15 +66,17 @@ class EditTopicHandler(BaseHandler):
     @user_required
     def get(self, topic_id):
         user = users.get_current_user()
-        if user.nickname() in ADMINS or user.nickname() == Topic.get_by_id(int(topic_id)).author:
+        topic = Topic.get_by_id(int(topic_id))
+
+        if user.nickname() in ADMINS or user.nickname() == topic.author:
             args = {}
-            args["topic_title"] = Topic.get_by_id(int(topic_id)).title
-            args["topic_content"]  = Topic.get_by_id(int(topic_id)).content
-            args["tags"] = Topic.get_by_id(int(topic_id)).tags
+            args["topic_title"] = topic.title
+            args["topic_content"] = topic.content
+            args["tags"] = topic.tags
             self.base_args(user, args)
-
-
             self.render_template("edit-topic.html", args)
+        else:
+            self.redirect('/topic/' + topic_id)
 
     @user_required
     def post(self, topic_id):
