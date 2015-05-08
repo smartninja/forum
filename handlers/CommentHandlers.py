@@ -12,9 +12,7 @@ class DeleteCommentHandler(BaseHandler):
     def get(self, comment_id):
         user = users.get_current_user().nickname()
         if user in ADMINS or user == Comment.get_by_id(int(comment_id)).author:
-            args = {}
-            self.base_args()
-            self.render_template("delete.html", args)
+            self.render_template("delete.html")
 
     @user_required
     def post(self, comment_id):
