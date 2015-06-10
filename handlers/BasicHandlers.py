@@ -46,7 +46,7 @@ class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
         curs = Cursor(urlsafe=self.request.get('page'))
-        topics, next_curs, more = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created2).fetch_page(2, start_cursor=curs)
+        topics, next_curs, more = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created2).fetch_page(50, start_cursor=curs)
 
         #topics = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created2).fetch()
         args = {"topics": topics}
