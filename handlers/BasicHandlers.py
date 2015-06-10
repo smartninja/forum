@@ -2,6 +2,8 @@ import webapp2, os, jinja2, filters
 from google.appengine.api import users
 from models.topic import Topic
 from settings import ADMINS
+from google.appengine.datastore.datastore_query import Cursor
+
 
 template_dir = os.path.join(os.path.dirname(__file__), '../templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),
@@ -43,15 +45,20 @@ class BaseHandler(webapp2.RequestHandler):
 class MainHandler(BaseHandler):
     def get(self):
         user = users.get_current_user()
-        topics = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created2).fetch()
+        curs = Cursor(urlsafe=self.request.get('page'))
+        topics, next_curs, more = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created2).fetch_page(2, start_cursor=curs)
+
+        #topics = Topic.query(Topic.deleted == False).order(-Topic.latest_comment_created2).fetch()
         args = {"topics": topics}
 
         if user:
             if user.nickname() in ADMINS:
                 args["admin"] = True
 
-        self.base_args(user, args)
+        if more and next_curs:
+            args["next"] = next_curs.urlsafe()
 
+        self.base_args(user, args)
         self.render_template("index.html", args)
 
 class SearchHandler(BaseHandler):

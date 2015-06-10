@@ -53,4 +53,10 @@
             </div>
         </div>
     </div>
+
+    {% if next %}
+        <ul class="pager">
+            <li class="previous"><a href="?page={{next}}"><span aria-hidden="true">&larr;</span> Starejše objave</a></li>
+        </ul>
+    {% endif %}
 {% endblock content %}
