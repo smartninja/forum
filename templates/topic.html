@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% block title %} {{ topic.title }} {% endblock title %}
 
+{% block meta %}
+    <meta property="og:title" content="{{ topic.title }}" />
+{% endblock meta %}
+
 {% block content %}
     <div class="panel panel-success">
         <div class="panel-heading panel-main-h">{{ topic.title }}
