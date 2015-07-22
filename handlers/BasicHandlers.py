@@ -1,6 +1,7 @@
 import webapp2, os, jinja2, filters
 from google.appengine.api import users
 from models.topic import Topic
+from models.user import User
 from settings import ADMINS
 from google.appengine.datastore.datastore_query import Cursor
 
@@ -54,11 +55,16 @@ class MainHandler(BaseHandler):
             if user.nickname() in ADMINS:
                 args["admin"] = True
 
+            the_users = User.query(User.email == user.email()).fetch()
+            if not the_users:
+                User.create(user.email(), user.nickname() in ADMINS)
+
         if more and next_curs:
             args["next"] = next_curs.urlsafe()
 
         self.base_args(user, args)
         self.render_template("index.html", args)
+
 
 class SearchHandler(BaseHandler):
     def get(self):
@@ -75,8 +81,58 @@ class SearchHandler(BaseHandler):
                 args["topics"] = topics
             self.render_template("search.html", args)
         else:
-            self.render_template("search.html")
+            self.render_template("search.html", args)
 
     def post(self):
         query = self.request.get("searchbox")
         self.redirect("search?query=" + str(query))
+
+
+class EditUserHandler(BaseHandler):
+    def get(self):
+        user = users.get_current_user()
+        args = {}
+
+        user_query = User.query(User.email == user.email()).fetch()
+        user_id = ""
+        user_first_name = ""
+        user_last_name = ""
+        user_updates = ""
+
+        for the_user in user_query:
+            user_id = the_user.key.id()
+            user_first_name = the_user.first_name
+            user_last_name = the_user.last_name
+            user_updates = the_user.receive_updates
+
+
+        args["first_name"] = user_first_name
+        args["last_name"] = user_last_name
+        args["is_checked"] = user_updates
+
+        self.base_args(user, args)
+        self.render_template("edit-user.html", args)
+
+    def post(self):
+        user = users.get_current_user()
+        args = {}
+
+
+        user_query = User.query(User.email == user.email()).fetch()
+        user_id = ""
+        for the_user in user_query:
+            user_id = the_user.key.id()
+
+        the_user = User.get_by_id(int(user_id))
+        the_user.first_name = self.request.get("first-name")
+        the_user.last_name = self.request.get("last-name")
+
+        updates = self.request.get("updates")
+        if updates == u'on':
+            the_user.receive_updates = True
+        else:
+            the_user.receive_updates = False
+
+        the_user.put()
+
+        self.redirect("/")

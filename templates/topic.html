@@ -19,6 +19,16 @@
                 <a href="/delete-topic/{{ topic.key.id() }}" class="btn btn-danger btn-xs" title="Delete topic"><span class="glyphicon glyphicon-remove"></span></a>
             </div>
             {% endif %}
+
+            {% if username %}
+            <form method="post" style="height:34px;">
+                {% if subscribed %}
+                <input name="subscribe-button" type="submit" class="btn btn-danger pull-right" value="Odjavi se">
+                {% else %}
+                <input name="subscribe-button" type="submit" class="btn btn-danger pull-right" value="Naroči se">
+                {% endif %}
+            </form>
+            {% endif %}
         </div>
         <div class="panel-body panel-main-b">
             {{ topic.content|markdown }}
@@ -57,7 +67,7 @@
                     <div class="form-group">
                         <textarea name="content" placeholder="Komentiraj" class="form-control markdown" rows="5"></textarea>
                     </div>
-                    <input class="btn btn-primary" type="submit" value="Objavi komentar">
+                    <input name="post-comment" class="btn btn-primary" type="submit" value="Objavi komentar">
                 </form>
             </div>
         </div>

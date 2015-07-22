@@ -1,9 +1,11 @@
 
 from google.appengine.api import users
 import datetime
+from emails.update import email_new_topic, email_new_comment
 from handlers.BasicHandlers import BaseHandler
 from models.comment import Comment
 from models.topic import Topic
+from models.user import User
 from settings import ADMINS
 from utils.decorators import user_required, admin_required
 
@@ -18,6 +20,9 @@ class TopicHandler(BaseHandler):
         if user:
             if user.nickname() in ADMINS:
                 args["admin"]=True
+
+            if user.email() in topic.subscribers:
+                args["subscribed"] = True
         self.base_args(user, args)
         args["comments"] = Comment.query(Comment.deleted==False, Comment.the_topic_id==int(topic_id)).order(Comment.created).fetch()
 
@@ -25,16 +30,45 @@ class TopicHandler(BaseHandler):
         self.render_template("topic.html", args)
 
     def post(self, topic_id):
-        author = users.get_current_user().nickname()
+        user = users.get_current_user()
+        author = user.nickname()
         content = self.request.get("content")
 
-        if content:
-            comment = Comment.create(author, content, int(topic_id))
-            topic = Topic.add_comment(int(topic_id), comment.created, comment.author)
+        post_comment = self.request.get("post-comment")
+        subscribe_button = self.request.get("subscribe-button")
 
+        if post_comment:
+            if content:
+                comment = Comment.create(author, content, int(topic_id))
+                Topic.add_comment(int(topic_id), comment.created, comment.author)
+
+                the_user = ""
+                for usr in User.query(User.email == user.email()).fetch():
+                    the_user = usr
+
+
+                topic = Topic.get_by_id(int(topic_id))
+                subscriber_query = topic.subscribers
+                for email in subscriber_query:
+                    if email != user.email(): # don't send email update to the author of the comment
+                        email_new_comment(the_user.first_name, Topic.get_by_id(int(topic_id)).title, str(topic_id), email)
+
+                self.redirect('/topic/' + str(topic_id))
+            else:
+                self.redirect('/topic/' + str(topic_id))
+
+        elif subscribe_button:
+            topic = Topic.get_by_id(int(topic_id))
+            user = users.get_current_user()
+            user_email = user.email()
+
+            if user_email in topic.subscribers:
+                topic.subscribers.remove(user_email)
+            else:
+                topic.subscribers.append(user_email)
+
+            topic.put()
             self.redirect("/topic/" + str(topic_id))
-        else:
-            self.redirect('/topic/' + str(topic_id))
 
 
 class NewTopicHandler(BaseHandler):
@@ -47,6 +81,7 @@ class NewTopicHandler(BaseHandler):
 
     @user_required
     def post(self):
+        user = users.get_current_user()
         title = self.request.get("title")
         content = self.request.get("content")
         tags = self.request.get("all-tags").split(",")
@@ -58,7 +93,21 @@ class NewTopicHandler(BaseHandler):
 
         if title and content and tags:
             topic = Topic.create(title, content, author, tags)
+            topic.subscribers.append(user.email())
+            topic.put()
             self.redirect("/topic/" + str(topic.key.id()))
+
+            the_users = User.query(User.receive_updates==True).fetch()
+
+            for user in the_users:
+                email = user.email
+                if user.first_name is None:
+                    first_name = ""
+                else:
+                    first_name = user.first_name
+
+                if email != users.get_current_user().email():
+                    email_new_topic(first_name, title, topic.key.id(), email)
         else:
             self.redirect('/')
 

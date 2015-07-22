@@ -17,6 +17,7 @@ class Topic(ndb.Model):
     latest_comment_created = ndb.DateTimeProperty(auto_now_add=True)
     latest_comment_created2 = ndb.DateTimeProperty(auto_now_add=True)
     latest_comment_author = ndb.StringProperty(indexed=False)
+    subscribers = ndb.StringProperty(repeated=True)
 
     @classmethod
     def create(cls, title, content, author, tags):
