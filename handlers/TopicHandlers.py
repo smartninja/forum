@@ -187,6 +187,3 @@ class OpenTopicHandler(BaseHandler):
         topic.closed=False
         topic.put()
         self.redirect("/topic/" + topic_id)
-
-
-
