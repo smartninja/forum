@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %} Add instructor {% endblock title %}
+
+{% block content %}
+<h1>Add instructor</h1>
+
+<form method="post">
+    <div class="form-group">
+        <strong>First name:</strong><br>
+        <input class="form-control" placeholder="First name" type="text" name="first-name" value="{{ first_name }}">
+    </div>
+    <div class="form-group">
+        <strong>Last name:</strong><br>
+        <input class="form-control" placeholder="Last name" type="text" name="last-name" value="{{ last_name }}">
+    </div>
+    <div class="form-group">
+        <strong>Slug:</strong>(example: Žiga Besal --> <strong>Ziga+Besal</strong>)<br>
+        <input class="form-control" placeholder="Last name" type="text" name="slug" value="{{ last_name }}">
+    </div>
+    <div class="form-group">
+        <strong>E-mail:</strong><br>
+        <input class="form-control" placeholder="E-mail" type="email" name="email" value="{{ email }}">
+    </div>
+
+    <input type="submit" value="Add" id="submit-topic" style="font-size: 20px;" class="btn btn-info">
+</form>
+{% endblock content %}

@@ -6,10 +6,12 @@ class User(ndb.Model):
     email = ndb.StringProperty()
     receive_updates = ndb.BooleanProperty(default=True)
     is_admin = ndb.BooleanProperty(default=False)
+    is_instructor = ndb.BooleanProperty(default=False)
+    slug = ndb.StringProperty(default=None)
 
 
     @classmethod
     def create(cls, email, is_admin):
-        topic = cls(email = email, is_admin = is_admin)
-        topic.put()
-        return topic
+        user = cls(email = email, is_admin = is_admin)
+        user.put()
+        return user

@@ -10,17 +10,9 @@
 
     <p><strong>Topic filter po inštruktorjih</strong></p>
     <p>
-        <a href="/search?query=Ziga+Besal">Žiga Besal</a>,
-        <a href="/search?query=Jure+Doler">Jure Doler</a>,
-        <a href="/search?query=Gregor+Gresak">Gregor Grešak</a>,
-        <a href="/search?query=Matej+Ramuta">Matej Ramuta</a>,
-        <a href="/search?query=Miha+Susnik">Miha Sušnik</a>,
-        <a href="/search?query=Janko+Tomsic">Janko Tomšič</a>,
-        <a href="/search?query=Dal+Rupnik">Dal Rupnik</a>,
-        <a href="/search?query=Rok+Jaklic">Rok Jaklič</a>,
-        <a href="/search?query=Tomaz+Bracic">Tomaž Bračič</a>,
-        <a href="/search?query=Marko+Rizvic">Marko Rizvič</a>,
-        <a href="/search?query=Ziga+Stopinsek">Žiga Stopinšek</a>
+        {% for instructor in instructors %}
+        <a href="/search?query={{ instructor.slug }}">{{ instructor.first_name }} {{ instructor.last_name }}</a>,
+        {% endfor %}
     </p>
 
     <div class="row">

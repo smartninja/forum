@@ -1,5 +1,5 @@
 import webapp2
-from handlers.BasicHandlers import MainHandler, SearchHandler, EditUserHandler
+from handlers.BasicHandlers import MainHandler, SearchHandler, EditUserHandler, AddInstructorHandler
 from handlers.CommentHandlers import DeleteCommentHandler, EditCommentHandler
 from handlers.TopicHandlers import TopicHandler, NewTopicHandler, DeleteTopicHandler, EditTopicHandler, \
     CloseTopicHandler, OpenTopicHandler
@@ -17,4 +17,5 @@ app = webapp2.WSGIApplication([
     webapp2.Route("/search", SearchHandler),
     webapp2.Route("/open-topic/<topic_id:\d+>", OpenTopicHandler),
     webapp2.Route("/edit-user", EditUserHandler),
+    webapp2.Route("/add-instructor", AddInstructorHandler),
 ], debug=True)

@@ -45,6 +45,10 @@ def email_new_comment(first_name, topic_name, topic_id, email):
 
         Lep pozdrav,
         SmartNinja Team
+
+
+        -----------------------------------
+        Za odjavo od SmartNinja forum newsletterja, obišči: http://forum.smartninja.org/edit-user
         '''.format(first_name.encode('utf-8'),
                    topic_name.encode('utf-8'),
                    topic_id.encode('utf-8'))
@@ -57,6 +61,10 @@ def email_new_comment(first_name, topic_name, topic_id, email):
         <br>
         Lep pozdrav,
         SmartNinja Team
+        <br>
+        <br>
+        <hr>
+        Za odjavo od SmartNinja forum newsletterja <a href="http://forum.smartninja.org/edit-user">klikni tukaj</a>.
         '''.format(first_name.encode('utf-8'),
                    topic_name.encode('utf-8'),
                    str(topic_id).encode('utf-8'))
@@ -71,6 +79,10 @@ def email_new_comment(first_name, topic_name, topic_id, email):
 
         Lep pozdrav,
         SmartNinja Team
+
+
+        -----------------------------------
+        Za odjavo od SmartNinja forum newsletterja, obišči: http://forum.smartninja.org/edit-user
         '''.format(topic_name.encode('utf-8'),
                    topic_id.encode('utf-8'))
 
@@ -82,6 +94,10 @@ def email_new_comment(first_name, topic_name, topic_id, email):
         <br>
         Lep pozdrav,
         SmartNinja Team
+        <br>
+        <br>
+        <hr>
+        Za odjavo od SmartNinja forum newsletterja <a href="http://forum.smartninja.org/edit-user">klikni tukaj</a>.
         '''.format(topic_name.encode('utf-8'),
                    str(topic_id).encode('utf-8'))
 

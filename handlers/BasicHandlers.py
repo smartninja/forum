@@ -34,6 +34,8 @@ class BaseHandler(webapp2.RequestHandler):
     def base_args(self, user, args): #username, logout/login
         if user:
             args["username"] = user.nickname()
+            if user.nickname() in ADMINS:
+                args["admin"] = True
             args["logout"] = users.create_logout_url("/")
         else:
             args["login"] = users.create_login_url("/")
@@ -61,6 +63,9 @@ class MainHandler(BaseHandler):
 
         if more and next_curs:
             args["next"] = next_curs.urlsafe()
+
+        instructors = User.query(User.is_instructor == True).fetch()
+        args["instructors"] = instructors
 
         self.base_args(user, args)
         self.render_template("index.html", args)
@@ -136,3 +141,48 @@ class EditUserHandler(BaseHandler):
         the_user.put()
 
         self.redirect("/")
+
+
+class AddInstructorHandler(BaseHandler):
+    def get(self):
+        user = users.get_current_user()
+        args = {}
+
+        self.base_args(user, args)
+        self.render_template("add-instructor.html", args)
+
+    def post(self):
+        first_name = self.request.get("first-name")
+        last_name = self.request.get("last-name")
+        email = self.request.get("email")
+        slug = self.request.get("slug")
+
+        if first_name and last_name and email and slug:
+            check_user = User.query(User.email == email).fetch()
+
+            if check_user:
+                user_id = ""
+                for this_user in check_user:
+                    user_id = this_user.key.id()
+
+                the_user = User.get_by_id(int(user_id))
+                the_user.first_name = first_name
+                the_user.last_name = last_name
+                the_user.email = email
+                the_user.slug = slug
+                the_user.is_instructor = True
+                the_user.put()
+
+
+            else:
+                the_user = User.create(email, False)
+                the_user.first_name = first_name
+                the_user.last_name = last_name
+                the_user.slug = slug
+                the_user.is_instructor = True
+                the_user.put()
+
+            self.redirect("/")
+
+        else:
+            self.redirect("/add-instructor")
