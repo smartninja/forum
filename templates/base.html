@@ -43,7 +43,7 @@
           <ul class="nav navbar-nav navbar-right">
 
             {% if username %}
-            <li><a href="/new-topic">Nova objava</a></li>
+            <!--<li><a href="/new-topic">Nova objava</a></li>-->
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ username }}<span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
@@ -67,6 +67,17 @@
     </nav>
 
     <div class="container">
+        <div class="panel panel-danger">
+            <div class="panel-heading">
+                <h1 class="panel-title">Nov SmartNinja forum!</h1>
+            </div>
+            <div class="panel-body">
+                Obveščamo te, da je v uporabi nova verzija SmartNinja foruma.
+                <br>
+                <br>
+                <a href="https://groups.google.com/forum/#!forum/smartninja-slovenia" class="btn btn-danger center">Pojdi na nov SmartNinja forum</a>
+            </div>
+        </div>
     {% block content %}
     {% endblock content %}
     </div>
