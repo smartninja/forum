@@ -18,15 +18,9 @@
         <div class="form-group">
             <select name="instructor" class="form-control">
                 <option value>Instructor</option>
-                <option value="Gregor Gresak">Gregor Grešak</option>
-                <option value="Miha Susnik">Miha Sušnik</option>
-                <option value="Janko Tomsic">Janko Tomšič</option>
-                <option value="Miha Fabjan">Miha Fabjan</option>
-                <option value="Matej Meglic">Matej Meglič</option>
-                <option value="Jure Doler">Jure Doler</option>
-                <option value="Ziga Besal">Ziga Besal</option>
-                <option value="Matej Ramuta">Matej Ramuta</option>
-                <option value="Romina Kavcic">Romina Kavčič</option>
+                {% for instructor in instructors %}
+                <option value="{{ instructor.slug }}">{{ instructor.first_name }} {{ instructor.last_name }}</option>
+                {% endfor %}
             </select>
         </div>
         <div class="input-fields-wrap">

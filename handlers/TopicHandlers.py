@@ -76,6 +76,10 @@ class NewTopicHandler(BaseHandler):
     def get(self):
         args = {}
         user = users.get_current_user()
+
+        instructors = User.query(User.is_instructor == True).fetch()
+        args["instructors"] = instructors
+
         self.base_args(user, args)
         self.render_template("new-topic.html", args)
 
